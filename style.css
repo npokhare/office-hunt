@@ -1,0 +1,585 @@
+/* ========================================
+   OFFICE HUNT - STYLES
+   ======================================== */
+
+/* ========================================
+   BASE STYLES
+   ======================================== */
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: 'Trebuchet MS', sans-serif;
+  background: linear-gradient(135deg, #e0f7fa, #004c4c);
+  color: #333;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  padding: 1rem;
+}
+
+/* ========================================
+   MAIN CONTAINER
+   ======================================== */
+
+#app {
+  width: 90%;
+  max-width: 500px;
+  text-align: center;
+  background: rgba(255, 255, 255, 0.95);
+  padding: 2rem;
+  border-radius: 1.5rem;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+  position: relative;
+  z-index: 2;
+  animation: fadeIn 0.8s ease;
+}
+
+/* ========================================
+   TYPOGRAPHY
+   ======================================== */
+
+h1, h2 {
+  color: #4e342e;
+  margin-bottom: 1rem;
+}
+
+h1 {
+  font-size: 2rem;
+}
+
+h2 {
+  font-size: 1.5rem;
+}
+
+p {
+  font-size: 1.1rem;
+  line-height: 1.6;
+  margin-bottom: 1.5rem;
+}
+
+/* ========================================
+   BUTTONS
+   ======================================== */
+
+button {
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: background-color 0.3s;
+}
+
+button:hover {
+  background-color: #45a049;
+}
+
+button:active {
+  transform: scale(0.98);
+}
+
+.back-button {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  padding: 0.5rem 1rem;
+  background: #888;
+  font-size: 0.9rem;
+}
+
+.back-button:hover {
+  background: #666;
+}
+
+.success-button {
+  background: #4CAF50;
+  padding: 0.5rem 1rem;
+  font-size: 1rem;
+}
+
+.success-button:hover {
+  background: #45a049;
+}
+
+.hint-button {
+  background: #2196F3;
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 1rem;
+  font-size: 0.9rem;
+  cursor: pointer;
+  margin: 0.5rem 0;
+  transition: all 0.3s ease;
+  font-family: inherit;
+}
+
+.hint-button:hover {
+  background: #1976D2;
+  transform: scale(1.05);
+}
+
+.hint-button:disabled {
+  background: #ccc;
+  color: #666;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.hint-button:disabled:hover {
+  background: #ccc;
+  transform: none;
+}
+
+/* ========================================
+   FORM INPUTS
+   ======================================== */
+
+input {
+  padding: 0.6rem;
+  font-size: 1rem;
+  border-radius: 0.5rem;
+  border: 1px solid #aaa;
+  width: 80%;
+  margin-top: 1rem;
+  font-family: inherit;
+  transition: all 0.3s ease;
+}
+
+input:focus {
+  outline: none;
+  box-shadow: 0 0 10px 2px #8e44ad;
+  border: 2px solid #9b59b6;
+}
+
+input.correct {
+  background-color: #4CAF50;
+  color: white;
+  border-color: #45a049;
+  font-weight: bold;
+}
+
+input:disabled {
+  cursor: not-allowed;
+  opacity: 1;
+}
+
+input[type="text"] {
+  width: 100%;
+  padding: 0.75rem;
+  margin-bottom: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 1rem;
+}
+
+/* ========================================
+   NUMBER PUZZLE SPECIFIC STYLES
+   ======================================== */
+
+.number-input-container {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  align-items: center;
+  font-family: monospace;
+  margin-top: 10px;
+  flex-wrap: wrap;
+}
+
+.number-group {
+  display: flex;
+  gap: 5px;
+  align-items: center;
+}
+
+.number-input {
+  width: 3rem;
+  height: 3rem;
+  text-align: center;
+  padding: 0.5rem;
+  margin: 0;
+  font-size: 1.3rem;
+  font-weight: bold;
+  border: 2px solid #ddd;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+  background-color: white;
+  box-sizing: border-box;
+}
+
+.number-input:focus {
+  box-shadow: 0 0 10px 2px #8e44ad;
+  border: 2px solid #9b59b6;
+  outline: none;
+}
+
+.number-input.correct {
+  background-color: #4CAF50;
+  color: white;
+  border-color: #45a049;
+  font-weight: bold;
+}
+
+.number-input:disabled {
+  cursor: not-allowed;
+  opacity: 1;
+  background-color: #4CAF50;
+  color: white;
+}
+
+.number-input:disabled.correct {
+  background-color: #4CAF50;
+  color: white;
+  border-color: #45a049;
+}
+
+.number-separator {
+  font-size: 1.8rem;
+  font-weight: bold;
+  color: #4e342e;
+  margin: 0 0.5rem;
+}
+
+/* ========================================
+   UNLOCK MESSAGE STYLES
+   ======================================== */
+
+.unlock-message {
+  margin-top: 1rem;
+  padding: 1rem;
+  background: linear-gradient(135deg, #4CAF50, #8BC34A);
+  border-radius: 10px;
+  color: white;
+  text-align: center;
+  font-weight: bold;
+  box-shadow: 0 4px 15px rgba(76, 175, 80, 0.3);
+  animation: unlockPulse 1s ease-in-out;
+}
+
+.unlock-animation {
+  animation: unlockBounce 0.8s ease-out;
+}
+
+@keyframes unlockPulse {
+  0% {
+    transform: scale(0.8);
+    opacity: 0;
+  }
+  50% {
+    transform: scale(1.05);
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes unlockBounce {
+  0% {
+    transform: translateY(-10px);
+    opacity: 0;
+  }
+  60% {
+    transform: translateY(5px);
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+/* ========================================
+   SUCCESS MESSAGE STYLES
+   ======================================== */
+
+.success-message {
+  margin-top: 1rem;
+  padding: 1rem;
+  background: linear-gradient(135deg, #4CAF50, #8BC34A);
+  border-radius: 10px;
+  color: white;
+  text-align: center;
+  font-weight: bold;
+  box-shadow: 0 4px 15px rgba(76, 175, 80, 0.3);
+  animation: successPulse 1s ease-in-out;
+}
+
+.success-animation {
+  animation: successBounce 0.8s ease-out;
+}
+
+.continue-button {
+  background: #FF9800;
+  color: white;
+  border: none;
+  padding: 0.7rem 1.5rem;
+  border-radius: 25px;
+  font-size: 1rem;
+  cursor: pointer;
+  margin-top: 0.8rem;
+  transition: all 0.2s ease;
+  font-weight: bold;
+  box-shadow: 0 3px 10px rgba(255, 152, 0, 0.3);
+}
+
+.continue-button:hover {
+  background: #F57C00;
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(255, 152, 0, 0.4);
+}
+
+@keyframes successPulse {
+  0% {
+    transform: scale(0.8);
+    opacity: 0;
+  }
+  50% {
+    transform: scale(1.05);
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes successBounce {
+  0% {
+    transform: translateY(-10px);
+    opacity: 0;
+  }
+  60% {
+    transform: translateY(5px);
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+/* ========================================
+   FINAL CERTIFICATE STYLES
+   ======================================== */
+
+.certificate {
+  max-width: 700px;
+  margin: 2rem auto;
+  padding: 2rem;
+  border: 5px solid #8BC34A;
+  border-radius: 20px;
+  background: #FFF8E1;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+  text-align: center;
+  font-family: 'Cursive', sans-serif;
+  position: relative;
+}
+
+.decorative-flower {
+  position: absolute;
+  font-size: 3rem;
+  top: -30px;
+}
+
+.decorative-flower.top-left {
+  left: -30px;
+}
+
+.decorative-flower.top-right {
+  right: -30px;
+}
+
+.certificate-title {
+  color: #4CAF50;
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+}
+
+.certificate-content {
+  font-size: 1.2rem;
+  margin: 1rem 0;
+}
+
+.player-names {
+  background: linear-gradient(135deg, #f8f8f8, #e8e8e8);
+  border-radius: 1rem;
+  padding: 1rem;
+  margin: 1.5rem 0;
+  border: 2px solid #4e342e;
+}
+
+.player-name {
+  color: #4e342e;
+  font-weight: bold;
+  font-size: 1.1rem;
+}
+
+.treasure-location {
+  font-size: 1.2rem;
+  margin: 2rem 0;
+  color: #FF9800;
+}
+
+.certificate-closing {
+  margin-top: 3rem;
+  font-size: 1rem;
+  color: #388E3C;
+}
+
+/* ========================================
+   CONFETTI CANVAS
+   ======================================== */
+
+#confetti-canvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* ========================================
+   ANIMATIONS
+   ======================================== */
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes shake {
+  0% { transform: translateX(0); }
+  25% { transform: translateX(-5px); }
+  50% { transform: translateX(5px); }
+  75% { transform: translateX(-5px); }
+  100% { transform: translateX(0); }
+}
+
+@keyframes glow {
+  0% { 
+    box-shadow: 0 0 5px rgba(139, 69, 19, 0.3);
+  }
+  50% { 
+    box-shadow: 0 0 20px rgba(139, 69, 19, 0.8);
+  }
+  100% { 
+    box-shadow: 0 0 5px rgba(139, 69, 19, 0.3);
+  }
+}
+
+/* ========================================
+   UTILITY CLASSES
+   ======================================== */
+
+.shake {
+  animation: shake 0.3s ease-in-out;
+}
+
+.glow {
+  animation: glow 0.4s ease-in-out;
+}
+
+.hidden {
+  display: none;
+}
+
+/* ========================================
+   RESPONSIVE DESIGN
+   ======================================== */
+
+@media (max-width: 600px) {
+  #app {
+    width: 95%;
+    padding: 1.5rem;
+  }
+
+  .certificate {
+    margin: 1rem auto;
+    padding: 1.5rem;
+  }
+
+  .certificate-title {
+    font-size: 2rem;
+  }
+
+  .number-input-container {
+    gap: 8px;
+  }
+
+  .number-group {
+    gap: 3px;
+  }
+
+  .number-input {
+    width: 2.5rem;
+    height: 2.5rem;
+    font-size: 1.1rem;
+    padding: 0.3rem;
+  }
+
+  .number-separator {
+    font-size: 1.5rem;
+    margin: 0 0.3rem;
+  }
+
+  .decorative-flower {
+    font-size: 2rem;
+    top: -20px;
+  }
+
+  .decorative-flower.top-left {
+    left: -20px;
+  }
+
+  .decorative-flower.top-right {
+    right: -20px;
+  }
+}
+
+@media (max-width: 400px) {
+  body {
+    padding: 0.5rem;
+  }
+
+  #app {
+    padding: 1rem;
+  }
+
+  .back-button {
+    position: static;
+    margin-bottom: 1rem;
+  }
+
+  h1 {
+    font-size: 1.5rem;
+  }
+
+  h2 {
+    font-size: 1.2rem;
+  }
+
+  .number-input {
+    width: 2.2rem;
+    height: 2.2rem;
+    font-size: 1rem;
+    padding: 0.2rem;
+  }
+
+  .number-separator {
+    font-size: 1.3rem;
+  }
+}
