@@ -78,7 +78,7 @@ const GAME_DATA = {
     {
       type: "welcome",
       title: "you have unlocked the messaging system",
-      content: "Please click the link below to deliver your message to DCC",
+      content: "Please click the link below to deliver your message.",
       url: "https://example.com/send-message" // Add the URL here
     },
   ]
@@ -566,6 +566,18 @@ class Game {
     }
   }
 
+  // --- helper to show success + continue in SAME block ---
+  showSuccessAndContinue(el, message) {
+    if (!el) return;
+    el.classList.remove("hidden");
+    el.innerHTML = `
+      <span>${message}</span>
+      <div style="margin-top:0.6rem;">
+        <button id="continue-button" onclick="game.goForward()" style="padding:0.55rem 1.2rem; border-radius:1.4rem; font-weight:bold; cursor:pointer;">Continue ➡</button>
+      </div>
+    `;
+  }
+
   render() {
     const clue = this.state.getCurrentClue();
     const progress = UIRenderer.createProgressBar(this.state.currentClue, GAME_DATA.clues.length, this.state);
@@ -656,15 +668,10 @@ class Game {
     const isCorrect = clue.answer.map(a => a.toLowerCase()).includes(val.toLowerCase());
     if (isCorrect) {
       this.state.saveAnswer(key, val);
-      const msg = document.getElementById("text-success-message");
-      if (msg) {
-        msg.textContent = "✅ Correct!";
-        msg.classList.remove("hidden");
-      }
       input.disabled = true;
       const submitBtn = input.parentElement.querySelector("button[onclick^='game.submitTextAnswer']");
       if (submitBtn) submitBtn.disabled = true;
-      this.ensureContinueButton(); // user advances manually
+      this.showSuccessAndContinue(document.getElementById("text-success-message"), "✅ Correct!");
     } else {
       input.classList.add("shake");
       setTimeout(() => input.classList.remove("shake"), 400);
@@ -677,18 +684,12 @@ class Game {
     const val = input.value.trim();
     const clue = this.getClueByKey(key);
     if (!clue || !clue.answer) return;
-    const isCorrect = clue.answer.includes(val);
-    if (isCorrect) {
+    if (clue.answer.includes(val)) {
       this.state.saveAnswer(key, val);
-      const msg = document.getElementById("number-success-message");
-      if (msg) {
-        msg.textContent = "✅ Correct!";
-        msg.classList.remove("hidden");
-      }
       input.disabled = true;
       const submitBtn = input.parentElement.querySelector("button[onclick^='game.submitNumberAnswer']");
       if (submitBtn) submitBtn.disabled = true;
-      this.ensureContinueButton();
+      this.showSuccessAndContinue(document.getElementById("number-success-message"), "✅ Correct!");
     } else {
       input.classList.add("shake");
       setTimeout(() => input.classList.remove("shake"), 400);
@@ -713,90 +714,66 @@ class Game {
       const msg = document.getElementById("unlock-message");
       const clue = GAME_DATA.clues.find(c => c.format === "split-6");
       if (clue && clue.answer && clue.answer.includes(code)) {
-        if (msg) {
-          msg.textContent = "✅ Code accepted!";
-          msg.classList.remove("hidden");
-        }
         this.state.saveAnswer(clue.key, code);
-        // lock inputs
         for (let i = 1; i <= 6; i++) {
           const box = document.getElementById("n" + i);
           if (box) box.disabled = true;
         }
-        this.ensureContinueButton();
+        this.showSuccessAndContinue(msg, "✅ Code accepted!");
       } else if (msg) {
-        msg.textContent = "❌ Incorrect code";
         msg.classList.remove("hidden");
+        msg.textContent = "❌ Incorrect code";
       }
     }
   }
 
   restoreInputs(clue) {
     if (!clue) return;
-    // Text puzzle restore & lock if already solved
     if (clue.type === "puzzle") {
       const saved = this.state.savedAnswers[clue.key];
       if (saved) {
         const input = document.getElementById("answer");
         if (input) {
           input.value = saved;
-          // If answer still valid, lock & show success + continue
           if (clue.answer && clue.answer.map(a => a.toLowerCase()).includes(saved.toLowerCase())) {
             input.disabled = true;
-            const msg = document.getElementById("text-success-message");
-            if (msg) {
-              msg.textContent = "✅ Correct!";
-              msg.classList.remove("hidden");
-            }
             const submitBtn = input.parentElement.querySelector("button[onclick^='game.submitTextAnswer']");
             if (submitBtn) submitBtn.disabled = true;
-            this.ensureContinueButton();
+            this.showSuccessAndContinue(document.getElementById("text-success-message"), "✅ Correct!");
           }
         }
       }
     }
-    // Split 6 number puzzle
     if (clue.type === "number-puzzle" && clue.format === "split-6") {
       const saved = this.state.savedAnswers[clue.key];
       if (saved && saved.length === 6) {
-        let allBoxesPresent = true;
+        let allPresent = true;
         for (let i = 1; i <= 6; i++) {
           const box = document.getElementById("n" + i);
-            if (box) {
-              box.value = saved[i - 1];
-              box.disabled = true;
-            } else {
-              allBoxesPresent = false;
-            }
-        }
-        if (allBoxesPresent) {
-          const msg = document.getElementById("unlock-message");
-          if (msg) {
-            msg.textContent = "✅ Code accepted!";
-            msg.classList.remove("hidden");
+          if (box) {
+            box.value = saved[i - 1];
+            box.disabled = true;
+          } else {
+            allPresent = false;
           }
-          this.ensureContinueButton();
+        }
+        if (allPresent) {
+          this.showSuccessAndContinue(document.getElementById("unlock-message"), "✅ Code accepted!");
         }
       }
     }
-    // Single number answer puzzle restore & lock
     if (clue.type === "number-puzzle" && clue.format !== "split-6") {
       const saved = this.state.savedAnswers[clue.key];
       if (saved) {
         const input = document.getElementById("number-answer");
         if (input) {
           input.value = saved;
-          if (clue.answer && clue.answer.includes(saved)) {
-            input.disabled = true;
-            const msg = document.getElementById("number-success-message");
-            if (msg) {
-              msg.textContent = "✅ Correct!";
-              msg.classList.remove("hidden");
+            if (clue.answer && clue.answer.includes(saved)) {
+              input.disabled = true;
+              const submitBtn = input.parentElement.querySelector("button[onclick^='game.submitNumberAnswer']");
+              if (submitBtn) submitBtn.disabled = true;
+              this.showSuccessAndContinue(document.getElementById("number-success-message"), "✅ Correct!");
             }
-            const submitBtn = input.parentElement.querySelector("button[onclick^='game.submitNumberAnswer']");
-            if (submitBtn) submitBtn.disabled = true;
-            this.ensureContinueButton();
-          }
         }
       }
     }
