@@ -32,7 +32,7 @@ const GAME_DATA = {
   clues: [
     {
       type: "mission-name",
-      title: "🚀 The Last DCC Mission",
+      title: "🚀 The Last DCC Mission for some of us",
       content: "Welcome to the ultimate challenge! Please note that all mission must be completed within this office floor. Stay sharp, work together, and may the best team prevail!",
       action: { text: "Begin", handler: "nextClue" }
     },
