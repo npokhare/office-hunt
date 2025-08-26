@@ -33,7 +33,7 @@ const GAME_DATA = {
     {
       type: "mission-name",
       title: "🚀 The Last DCC Mission",
-      content: "Welcome to the ultimate challenge!",
+      content: "Welcome to the ultimate challenge! Please note that all mission must be completed within this office floor. Stay sharp, work together, and may the best team prevail!",
       action: { text: "Begin", handler: "nextClue" }
     },
     {
@@ -78,8 +78,8 @@ const GAME_DATA = {
     {
       type: "welcome",
       title: "you have unlocked the messaging system",
-      content: "Please click the link below to deliver your message.",
-      url: "https://forms.office.com/e/0rCb1fk5UC" // Add the URL here
+      content: "Please click the link below to deliver your message or open this url https://forms.office.com/e/MVRrqp2KHF ",
+      url: "https://forms.office.com/e/MVRrqp2KHF" // Add the URL here
     },
   ]
 };
